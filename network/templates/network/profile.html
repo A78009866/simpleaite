@@ -1,0 +1,136 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+<div class="profile-info" id="profile-info">
+    <input id="userId" type="hidden" value="{{ user.id }}">
+    <div class="container">
+        <div class="row">
+            <span class="col-3" id="profile-user"><h1>{{ user.username }}</h1></span>
+            {% if request.user.is_authenticated %}
+                {% if user != request.user %}
+                    {% if request.user in followers %}
+                        <span class="col-3">
+                            <a class="btn btn-outline-secondary" href="{% url 'unfollow_user' user.id %}" id="unfollow-button">Unfollow</a>
+                        </span>
+                    {% else %}
+                        <span class="col-3">
+                            <a class="btn btn-outline-secondary" href="{% url 'follow_user' user.id request.user.id %}" id="follow-button">Follow</a>
+                        </span>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+        </div>
+        <div class="row">
+            <span class="col-3" id="followers-number"><h6>Followers: {{ followerscount }}</h6></span>
+            <span class="col-3" id="following-number"><h6>Following: {{ followingcount }}</h6></span>
+        </div>
+    </div>
+</div>
+
+<div class="profile-posts" id="profile-posts">
+    {% for post in page_obj %}
+        <div class="post">
+            <div class="container">
+                <div class="row">
+                    <div class="col-8">
+                        <a class="username-link" href="{% url 'profile' user.username %}">
+                            <h4>{{ user.username }}</h4>
+                        </a>
+                    </div>
+                    {% if post.user == request.user %}
+                        <div class="edit">
+                            <div class="col-4">
+                                <button id="{{ post.id }}" class="edit-button btn btn-outline-secondary btn-sm">Edit</button>
+                            </div>
+                        </div>
+                        <div class="save" id="save-{{ post.id }}">
+                            <div class="col-4">
+                                <button data-post="{{ post.id }}" id="save-button-{{ post.id }}" class="save-button btn btn-secondary btn-sm">Save</button>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div id="post-content-{{ post.id }}">
+                        <div class="col" id="post-body">
+                            {{ post.body }}
+                        </div>
+                        <div class="col" id="post-timestamp">
+                            {{ post.timestamp }}
+                        </div>
+                        <div id="post-likes-{{ post.id }}">
+                            <div class="col">
+                                Likes: {{ post.likes.count }}
+                            </div>
+                        </div>
+                        {% if request.user.is_authenticated %}
+                            {% if post.id in user_likes_post_ids %}
+                                <div id="unlike-button-{{ post.id }}">
+                                    <div class="col">
+                                        <a class="btn btn-outline-primary btn-sm" href="{% url 'unlike_post' post.id %}">Unlike</a>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div id="like-button-{{ post.id }}">
+                                    <div class="col">
+                                        <a class="btn btn-primary btn-sm" href="{% url 'like_post' post.id %}">Like</a>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% if post.user == request.user %}
+                <div class="container">
+                    <div class="row">
+                        <div class="post-edit" id="post-edit-{{ post.id }}" >
+                            <div class="col-8">
+                                <textarea id="new-body-{{ post.id }}" cols=40></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>
+
+<nav aria-label="pagination-nav">
+    <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page=1">&laquo; first</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">previous</a>
+            </li>
+        {% endif %}
+
+        <span class="current">
+
+            <li class="page-item disabled">
+                <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+            </li>
+        </span>
+
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'network/profile.js' %}"></script>
+{% endblock %}

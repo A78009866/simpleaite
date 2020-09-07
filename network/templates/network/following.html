@@ -1,0 +1,76 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+    <div class="view" id="following-view">
+        <h1>followed by {{ request.user.username }}</h1>
+        <div id="following-posts">
+
+            {% for post in page_obj %}
+                <div class="post">
+                    <div class="username">
+                        <a class="username-link" href="{% url 'profile' post.user.username %}">
+                            <h4>{{ post.user.username }}</h4>
+                        </a>
+                    </div>
+                    <div class="post-body">
+                        {{ post.body }}
+                    </div>
+                    <div class="post-timestamp">
+                        {{ post.timestamp }}
+                    </div>
+                    <div id="post-likes-{{ post.id }}">
+                        <div class="col">
+                            Likes: {{ post.likes.count }}
+                        </div>
+                    </div>
+                    {% if post.id in user_likes_post_ids %}
+                        <div id="unlike-button-{{ post.id }}">
+                            <div class="col">
+                                <a class="btn btn-outline-primary btn-sm" href="{% url 'unlike_post' post.id %}">Unlike</a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div id="like-button-{{ post.id }}">
+                            <div class="col">
+                                <a class="btn btn-primary btn-sm" href="{% url 'like_post' post.id %}">Like</a>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+
+    <nav aria-label="pagination-nav">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1">&laquo; first</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">previous</a>
+                </li>
+            {% endif %}
+
+            <span class="current">
+
+                <li class="page-item disabled">
+                    <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                </li>
+            </span>
+
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+
+{% endblock %}

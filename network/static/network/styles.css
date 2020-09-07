@@ -1,0 +1,24 @@
+.view {
+    display: block;
+    padding: 3em;
+}
+
+.post {
+    padding: 2em;
+    border-style: double;
+    border-color: gainsboro;
+    border-radius: 1em;
+    margin: 1em;
+}
+
+.profile-info {
+    margin-top: 2em;
+}
+
+.post-edit {
+    display: none
+}
+
+.save {
+    display: none;
+}
