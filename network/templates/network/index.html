@@ -4,84 +4,58 @@
 {% block body %}
 
     <div class="view" id="all-posts-view">
-        <h1>All Posts</h1>
+        <h1 class="text-center">قاع المنشورات</h1>
         {% if request.user.is_authenticated %}
             <div class="post" id="new-post-view">
-                <form id="new-post">
-                    <h2>New Post</h2>
+                <form id="new-post" class="text-center">
+                    <h2>منشور جديد</h2>
                     {% csrf_token %}
-                    <textarea id="post-body" cols=40></textarea>
+                    <textarea id="post-body" class="form-control" rows="3"></textarea>
                     <br>
-                    <input type=submit class="btn btn-primary" id="new-post-submit">
+                    <input type="submit" class="btn btn-primary btn-block" id="new-post-submit">
                 </form>
             </div>
         {% endif %}
         <br>
         <div id="all-posts">
             {% for post in page_obj %}
-                <div class="post">
+                <div class="post card mb-3 p-3">
                     <div class="container">
-                        <div class="row">
+                        <div class="row align-items-center">
                             <div class="col-8">
                                 <a class="username-link" href="{% url 'profile' post.user.username %}">
                                     <h4>{{ post.user.username }}</h4>
                                 </a>
                             </div>
                             {% if post.user == request.user %}
-                                <div class="edit">
-                                    <div class="col-4">
-                                        <button id="{{ post.id }}" class="edit-button btn btn-outline-secondary btn-sm">Edit</button>
-                                    </div>
-                                </div>
-                                <div class="save" id="save-{{ post.id }}">
-                                    <div class="col-4">
-                                        <button data-post="{{ post.id }}" id="save-button-{{ post.id }}" class="save-button btn btn-secondary btn-sm">Save</button>
-                                    </div>
+                                <div class="col-4 text-right">
+                                    <button id="{{ post.id }}" class="edit-button btn btn-outline-secondary btn-sm">تعديل</button>
+                                    <button data-post="{{ post.id }}" id="save-button-{{ post.id }}" class="save-button btn btn-secondary btn-sm d-none">حفظ</button>
                                 </div>
                             {% endif %}
                         </div>
                     </div>
                     <div class="container">
                         <div class="row">
-                            <div id="post-content-{{ post.id }}">
-                                <div class="col" id="post-body">
-                                    {{ post.body }}
-                                </div>
-                                <div class="col" id="post-timestamp">
-                                    {{ post.timestamp }}
-                                </div>
-                                <div id="post-likes-{{ post.id }}">
-                                    <div class="col">
-                                        Likes: {{ post.likes.count }}
-                                    </div>
-                                </div>
-                                {% if request.user.is_authenticated %}
-                                    {% if post.id in user_likes_post_ids %}
-                                        <div id="unlike-button-{{ post.id }}">
-                                            <div class="col">
-                                                <a class="btn btn-outline-primary btn-sm" href="{% url 'unlike_post' post.id %}">Unlike</a>
-                                            </div>
-                                        </div>
-                                    {% else %}
-                                        <div id="like-button-{{ post.id }}">
-                                            <div class="col">
-                                                <a class="btn btn-primary btn-sm" href="{% url 'like_post' post.id %}">Like</a>
-                                            </div>
-                                        </div>
+                            <div class="col" id="post-content-{{ post.id }}">
+                                <p id="post-body">{{ post.body }}</p>
+                                <small class="text-muted" id="post-timestamp">{{ post.timestamp }}</small>
+                                <div id="post-likes-{{ post.id }}" class="mt-2">
+                                    <span>Likes: {{ post.likes.count }}</span>
+                                    {% if request.user.is_authenticated %}
+                                        {% if post.id in user_likes_post_ids %}
+                                            <a class="btn btn-outline-primary btn-sm" href="{% url 'unlike_post' post.id %}">ما عجبنيش</a>
+                                        {% else %}
+                                            <a class="btn btn-primary btn-sm" href="{% url 'like_post' post.id %}">عجبني</a>
+                                        {% endif %}
                                     {% endif %}
-                                {% endif %}
+                                </div>
                             </div>
                         </div>
                     </div>
                     {% if post.user == request.user %}
-                        <div class="container">
-                            <div class="row">
-                                <div class="post-edit" id="post-edit-{{ post.id }}" >
-                                    <div class="col-8">
-                                        <textarea id="new-body-{{ post.id }}" cols=40></textarea>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="container d-none" id="post-edit-{{ post.id }}">
+                            <textarea id="new-body-{{ post.id }}" class="form-control" rows="3"></textarea>
                         </div>
                     {% endif %}
                 </div>
@@ -89,32 +63,28 @@
         </div>
     </div>
 
-
     <nav aria-label="pagination-nav">
         <ul class="pagination justify-content-center">
             {% if page_obj.has_previous %}
                 <li class="page-item">
-                    <a class="page-link" href="?page=1">&laquo; first</a>
+                    <a class="page-link" href="?page=1">&laquo; الأول</a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">previous</a>
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">السابق</a>
                 </li>
             {% endif %}
 
-            <span class="current">
-
-                <li class="page-item disabled">
-                    <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
-                </li>
-            </span>
+            <li class="page-item disabled">
+                <span class="page-link">صفحة {{ page_obj.number }} من {{ page_obj.paginator.num_pages }}</span>
+            </li>
 
             {% if page_obj.has_next %}
-            <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-            </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">التالي</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">الأخير &raquo;</a>
+                </li>
             {% endif %}
         </ul>
     </nav>

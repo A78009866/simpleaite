@@ -6,52 +6,112 @@
         <title>{% block title %}Social Network{% endblock %}</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link href="{% static 'network/styles.css' %}" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            /* أنماط القائمة الجانبية */
+            .sidebar {
+                width: 100%;
+                height: auto;
+                background-color: #f8f9fa;
+                padding: 10px;
+                box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+                text-align: center;
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .sidebar a {
+                display: inline-block;
+                padding: 10px 15px;
+                text-decoration: none;
+                color: #333;
+                margin: 5px;
+                border-radius: 5px;
+                transition: 0.3s;
+            }
+
+            .sidebar a:hover {
+                background-color: #007bff;
+                color: white;
+            }
+
+            .main-content {
+                padding: 10px;
+            }
+
+            .navbar {
+                padding: 10px;
+                background-color: #f8f9fa;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                text-align: center;
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .navbar a {
+                margin: 5px;
+                text-decoration: none;
+                color: #333;
+                border-radius: 5px;
+                padding: 10px 15px;
+                transition: 0.3s;
+            }
+
+            .navbar a:hover {
+                background-color: #007bff;
+                color: white;
+            }
+
+            @media (max-width: 768px) {
+                .sidebar {
+                    flex-direction: column;
+                    align-items: center;
+                }
+
+                .sidebar a {
+                    margin: 5px 0;
+                }
+
+                .navbar {
+                    flex-direction: column;
+                    align-items: center;
+                }
+
+                .navbar a {
+                    margin: 5px 0;
+                }
+            }
+        </style>
         {% block script %}
         {% endblock %}
     </head>
     <body>
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" id="network-link" href="{% url 'index' %}">Network</a>
-          
-            <div>
-              <ul class="navbar-nav mr-auto">
+        <!-- القائمة الجانبية -->
+        <div class="sidebar">
+            <a href="{% url 'index' %}">الصفحة الرئيسية</a>
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'profile' request.user.username %}">الملف الشخصي</a>
+                <a href="{% url 'logout' %}">خرج علينا</a>
+            {% else %}
+                <a href="{% url 'login' %}">سجل الدخول</a>
+                <a href="{% url 'register' %}">صنع كونت جديد</a>
+            {% endif %}
+        </div>
 
-                {% if request.user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" id="profile-link" href="{% url 'profile' request.user.username %}"><strong>{{ request.user.username }}</strong></a>
-                    </li>
-                {% endif %}
-
-                <li class="nav-item">
-                    <a class="nav-link" id="all-posts-link" href="{% url 'index' %}">All Posts</a>
-                </li>
-            
-                {% if request.user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" id="following-link" href="{% url 'following' request.user.username %}">Following</a>
-                    </li>
-                {% endif %}
-            
-                {% if request.user.is_authenticated %}
- 
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
-                    </li>
-                {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login' %}">Log In</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'register' %}">Register</a>
-                    </li>
-                {% endif %}
-
-              </ul>
-            </div>
-          </nav>
+        <!-- النافبار -->
+        <nav class="navbar">
+            <a id="network-link" href="{% url 'index' %}">الشبكة</a>
+            <a id="all-posts-link" href="{% url 'index' %}">قاع المنشورات</a>
+            {% if request.user.is_authenticated %}
+                <a id="following-link" href="{% url 'following' request.user.username %}">المتابعين تاعك</a>
+            {% endif %}
+        </nav>
         
-        <div class="body">
+        <!-- المحتوى الرئيسي -->
+        <div class="main-content">
             {% block body %}
             {% endblock %}
         </div>

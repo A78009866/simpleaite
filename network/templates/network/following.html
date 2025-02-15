@@ -4,7 +4,7 @@
 {% block body %}
 
     <div class="view" id="following-view">
-        <h1>followed by {{ request.user.username }}</h1>
+        <h1>المتابعين تاع {{ request.user.username }}</h1>
         <div id="following-posts">
 
             {% for post in page_obj %}
@@ -28,13 +28,13 @@
                     {% if post.id in user_likes_post_ids %}
                         <div id="unlike-button-{{ post.id }}">
                             <div class="col">
-                                <a class="btn btn-outline-primary btn-sm" href="{% url 'unlike_post' post.id %}">Unlike</a>
+                                <a class="btn btn-outline-primary btn-sm" href="{% url 'unlike_post' post.id %}">ما عجبنيش</a>
                             </div>
                         </div>
                     {% else %}
                         <div id="like-button-{{ post.id }}">
                             <div class="col">
-                                <a class="btn btn-primary btn-sm" href="{% url 'like_post' post.id %}">Like</a>
+                                <a class="btn btn-primary btn-sm" href="{% url 'like_post' post.id %}">عجبني</a>
                             </div>
                         </div>
                     {% endif %}
@@ -64,10 +64,10 @@
 
             {% if page_obj.has_next %}
             <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a>
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">التالي</a>
             </li>
             <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">رجوع &raquo;</a>
             </li>
             {% endif %}
         </ul>
