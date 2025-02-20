@@ -1,0 +1,50 @@
+.view {
+    display: block;
+    padding: 3em;
+}
+
+.post {
+    padding: 2em;
+    border-style: double;
+    border-color: rgb(253, 253, 253);
+    border-radius: 1em;
+    margin: 1em;
+}
+
+.profile-info {
+    margin-top: 2em;
+}
+
+.post-edit {
+    display: none
+}
+
+.save {
+    display: none;
+}
+/* في ملف styles.css */
+.post {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.post-body {
+    font-size: 16px;
+}
+
+@media (max-width: 768px) {
+    .post-body {
+        font-size: 14px;
+    }
+
+    .post-timestamp {
+        font-size: 12px;
+    }
+
+    .btn {
+        font-size: 14px;
+        padding: 5px 10px;
+    }
+}
