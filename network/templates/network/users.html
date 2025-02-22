@@ -1,0 +1,18 @@
+{% extends 'network/layout.html' %}
+
+{% block body %}
+<h2>المستخدمون</h2>
+
+{% for user in users %}
+    <div class="user">
+        <span>{{ user.username }}</span>
+        {% if user != request.user %}
+            <form action="{% url 'send_friend_request' user.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">إضافة صديق</button>
+            </form>
+        {% endif %}
+    </div>
+{% endfor %}
+
+{% endblock %}

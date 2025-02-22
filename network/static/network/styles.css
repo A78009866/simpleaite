@@ -1,0 +1,307 @@
+/* ✅ استيراد خط جميل */
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Tajawal', sans-serif;
+}
+
+/* ✅ تصميم خلفية أنيقة */
+body {
+    background-color: #f4f6f9;
+    color: #333;
+}
+
+/* ✅ شريط التنقل (Navbar) */
+.navbar {
+    background-color: #757474e1;
+    padding: 15px 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+}
+
+.navbar .nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.navbar .nav-links a {
+    color: #eeecec;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.navbar .nav-links a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* ✅ تحسين القوائم والحاويات */
+.container {
+    max-width: 800px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+/* ✅ تحسين الأزرار */
+.btn {
+    border-radius: 5px;
+    padding: 12px 20px;
+    transition: 0.3s;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+}
+
+.btn-primary {
+    background-color: #6b6d70;
+}
+
+.btn-primary:hover {
+    background-color: #5f6163;
+    transform: scale(1.05);
+}
+
+.btn-success {
+    background-color: #28a745;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+}
+
+.btn-danger {
+    background-color: #dc3545;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    transform: scale(1.05);
+}
+
+/* ✅ الحقول النصية */
+input[type="text"], input[type="password"], textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+input:focus, textarea:focus {
+    border-color: #787b7e;
+    box-shadow: 0 0 5px rgba(103, 111, 119, 0.5);
+}
+
+/* ✅ تصميم نموذج تسجيل الدخول والتسجيل */
+.auth-form {
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+}
+
+/* ✅ تصميم المنشورات */
+.post {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    transition: 0.3s;
+}
+
+.post:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.post .post-header {
+    font-weight: bold;
+    color: #007bff;
+}
+
+.post .post-content {
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+.post .post-timestamp {
+    font-size: 12px;
+    color: gray;
+    margin-top: 5px;
+}
+
+/* ✅ طلبات الصداقة */
+.friend-request {
+    background: #f1f1f1;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* ✅ تحسين تصميم قائمة المستخدمين */
+.user {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    transition: 0.3s;
+}
+
+.user:hover {
+    background-color: #f8f9fa;
+    transform: scale(1.02);
+}
+
+/* ✅ تحسين تصميم طلبات الصداقة */
+.friend-request {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    transition: 0.3s;
+}
+
+.friend-request:hover {
+    background-color: #f8f9fa;
+    transform: scale(1.02);
+}
+
+/* ✅ تحسين استجابة التصميم للأجهزة الصغيرة */
+@media (max-width: 600px) {
+    .container {
+        width: 90%;
+    }
+
+    .auth-form {
+        width: 90%;
+    }
+
+    .user, .friend-request {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .user button, .friend-request button {
+        width: 100%;
+        margin-top: 5px;
+    }
+}
+
+/* ✅ تصميم إضافي للرسائل والأخطاء */
+.message {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.message.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* ✅ تصميم الصفحة الرئيسية */
+.index {
+    padding: 20px;
+}
+
+.index h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* ✅ تصميم صفحة المستخدمين */
+.users-list {
+    padding: 20px;
+}
+
+.users-list h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* ✅ تصميم صفحة طلبات الصداقة */
+.friend-requests {
+    padding: 20px;
+}
+
+.friend-requests h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* ✅ تصميم صفحة التسجيل */
+.register {
+    padding: 20px;
+}
+
+.register h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* ✅ تصميم صفحة تسجيل الدخول */
+.login {
+    padding: 20px;
+}
+
+.login h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.btn-danger {
+    background-color: #dc3545;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: 0.3s;
+    font-weight: bold;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    transform: scale(1.05);
+}

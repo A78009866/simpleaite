@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'network/styles.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شبكة اجتماعية</title>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="{% url 'index' %}" class="logo">Aite</a>
+        <div class="nav-links">
+            <a href="{% url 'index' %}">الصفحة الرئيسية</a>
+            <a href="{% url 'users' %}">المستخدمين</a>
+            <a href="{% url 'friend_requests' %}">طلبات الصداقة</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}">تسجيل الخروج</a>
+            {% else %}
+                <a href="{% url 'login' %}">تسجيل الدخول</a>
+                <a href="{% url 'register' %}">التسجيل</a>
+            {% endif %}
+        </div>
+    </nav>
+    <main>
+        {% block body %}
+        {% endblock %}
+    </main>
+</body>
+</html>

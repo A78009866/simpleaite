@@ -1,0 +1,22 @@
+{% extends 'network/layout.html' %}
+
+{% block body %}
+<h2>طلبات الصداقة</h2>
+
+{% for request in requests %}
+    <div class="friend-request">
+        <span>{{ request.from_user.username }}</span>
+        <form action="{% url 'accept_friend_request' request.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success">قبول</button>
+        </form>
+        <form action="{% url 'reject_friend_request' request.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">رفض</button>
+        </form>
+    </div>
+{% empty %}
+    <p>لا توجد طلبات صداقة حاليًا.</p>
+{% endfor %}
+
+{% endblock %}
