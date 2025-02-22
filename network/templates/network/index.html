@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'network/layout.html' %}
 
 {% block body %}
@@ -29,4 +30,101 @@
     <p>لا توجد منشورات بعد.</p>
 {% endfor %}
 
+=======
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+    <div class="view" id="all-posts-view">
+        <h1 class="text-center">قاع المنشورات</h1>
+        {% if request.user.is_authenticated %}
+            <div class="post" id="new-post-view">
+                <form id="new-post" class="text-center">
+                    <h2>منشور جديد</h2>
+                    {% csrf_token %}
+                    <textarea id="post-body" class="form-control" rows="3"></textarea>
+                    <br>
+                    <input type="submit" class="btn btn-primary btn-block" id="new-post-submit">
+                </form>
+            </div>
+        {% endif %}
+        <br>
+        <div id="all-posts">
+            {% for post in page_obj %}
+                <div class="post card mb-3 p-3">
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <a class="username-link" href="{% url 'profile' post.user.username %}">
+                                    <h4>{{ post.user.username }}</h4>
+                                </a>
+                            </div>
+                            {% if post.user == request.user %}
+                                <div class="col-4 text-right">
+                                    <button id="{{ post.id }}" class="edit-button btn btn-outline-secondary btn-sm">تعديل</button>
+                                    <button data-post="{{ post.id }}" id="save-button-{{ post.id }}" class="save-button btn btn-secondary btn-sm d-none">حفظ</button>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col" id="post-content-{{ post.id }}">
+                                <p id="post-body">{{ post.body }}</p>
+                                <small class="text-muted" id="post-timestamp">{{ post.timestamp }}</small>
+                                <div id="post-likes-{{ post.id }}" class="mt-2">
+                                    <span>Likes: {{ post.likes.count }}</span>
+                                    {% if request.user.is_authenticated %}
+                                        {% if post.id in user_likes_post_ids %}
+                                            <a class="btn btn-outline-primary btn-sm" href="{% url 'unlike_post' post.id %}">ما عجبنيش</a>
+                                        {% else %}
+                                            <a class="btn btn-primary btn-sm" href="{% url 'like_post' post.id %}">عجبني</a>
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% if post.user == request.user %}
+                        <div class="container d-none" id="post-edit-{{ post.id }}">
+                            <textarea id="new-body-{{ post.id }}" class="form-control" rows="3"></textarea>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <nav aria-label="pagination-nav">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1">&laquo; الأول</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">السابق</a>
+                </li>
+            {% endif %}
+
+            <li class="page-item disabled">
+                <span class="page-link">صفحة {{ page_obj.number }} من {{ page_obj.paginator.num_pages }}</span>
+            </li>
+
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">التالي</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">الأخير &raquo;</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'network/index.js' %}"></script>
+>>>>>>> 9e852cff8f184715319db200de82b4e3f66996de
 {% endblock %}

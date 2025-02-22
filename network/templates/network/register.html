@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'network/layout.html' %}
 
 {% block body %}
@@ -10,3 +11,98 @@
     <button type="submit">تسجيل</button>
 </form>
 {% endblock %}
+=======
+{% extends "network/layout.html" %}
+
+{% block body %}
+    <h1>صنع كونت</h1>
+
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+
+    <style>
+        .container {
+            background-color: #f1f1f1;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        form input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #0a0a0a;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        form button:hover {
+            background-color: #0e0f0f;
+        }
+
+        .links a {
+            display: block;
+            margin-top: 15px;
+            color: #0c0d0f;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+        .login-box img {
+            width: 100px;
+            margin-bottom: 20px;
+        }
+        .login-box h1 {
+            color: #080808;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+    </style>
+
+    <div class="container">
+        <form action="{% url 'register' %}" method="post">
+            <div class="login-box">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Aiter.jpg" alt="Facebook Logo">
+            <h1>Aite Salem</h1>
+            </div>
+            {% csrf_token %}
+            <div class="form-group">
+                <input class="form-control" autofocus type="text" name="username" placeholder="دخل الاسم تاعك">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="email" name="email" placeholder="دخل الايمايل تاعك">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="password" name="password" placeholder="صنع موتباس">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="password" name="confirmation" placeholder="عاود دخل الموتباس">
+            </div>
+            <input class="btn btn-primary" type="submit" value="صنع كونت">
+        </form>
+
+        <div class="links">
+            عندك كونت؟ <a href="{% url 'login' %}">سجل الدخول هنا</a>
+        </div>
+    </div>
+{% endblock %}
+>>>>>>> 9e852cff8f184715319db200de82b4e3f66996de
